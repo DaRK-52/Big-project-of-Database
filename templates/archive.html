@@ -1,0 +1,7 @@
+<form action="/blog/create/" method="post"> {% csrf_token %}
+    Title:
+    <input type=text name=title><br>
+    Body:
+    <textarea name=body rows=3 cols=60></textarea><br>
+    <input type=submit>
+</form>

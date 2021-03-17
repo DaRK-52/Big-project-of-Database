@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+    <h1>
+        <p style="text-align:center" font size="2">欢迎来到安静的博客：</p>
+
+
+    </h1>
+    <h1>
+        <p style="text-align:center">请输出账号密码：</p>
+    </h1>
+    <form action="/index/" method="post">
+        {% csrf_token %}
+        <p style="text-align:center">
+        用户：<input type="text" name="username" /><br />
+        </p>
+        <p style="text-align:center">密码：<input type="password" name="password" /><br />
+        <input type="submit" value="提交" />
+    </form>
+
+</body>
+</html>
