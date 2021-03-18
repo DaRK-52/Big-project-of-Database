@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import datetime
 from py2neo import Graph, Node, Relationship
+import json
 # 连接neo4j数据库，输入地址、用户名、密码
 graph = Graph("http://localhost:7474", username="neo4j", password='Accelerator2')
 
@@ -68,12 +69,14 @@ def index(request):
         #     }]
         username = request.POST.get('username')
         password = request.POST.get('password')
-        cypher_1 = "MATCH (m:person{name:'"+username+"'}) RETURN m"
+        cypher_1="MATCH (n) RETURN n LIMIT 25"
+        # cypher_1 = "MATCH (m:person{name:'"+username+"'}) RETURN m"
         # 通过cypher语句访问neo4j数据库
-        # cypher_1 = "MATCH (m:person{name:'bobo'}) return m"
+        # cypher_1 = "MATCH (m:person{name:'bobo'}) return m.sex"
         nodes_data = graph.run(cypher_1 ).data()
-        return render(request, 'testasd.html')
+        # print(nodes_data['n'])
         # return render(request, 'testasd.html',{"data":nodes_data})
+        return render(request, 'testasd.html',{"data":json.dumps(nodes_data[1]['n']['name'],ensure_ascii=False)})
         # return HttpResponse(nodes_data)
 #render返回渲染后的httpresponse对象
 # "name":views_name html变量名->views变量名
