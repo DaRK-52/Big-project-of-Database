@@ -19,6 +19,7 @@ def create_blogpost(request):
 
 def login(request):
     return render(request,'login.html')
+    # return render(request, 'testasd.html')
 def inp(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -35,17 +36,45 @@ def time(request):
     now = datetime.datetime.now()
     html = '现在的时间为%s'%now
     return HttpResponse(html)
-
+def echarts(request):
+    return render(request,'templates/echarts.min.js')
 def index(request):
     if  request.method == 'POST':
+        # data=[{
+        #         name: 'node01',
+        #         des: 'nodedes01',
+        #         symbolSize: 70,
+        #         category: 0,
+        #     }, {
+        #         name: 'node02',
+        #         des: 'nodedes02',
+        #         symbolSize: 50,
+        #         category: 1,
+        #     }, {
+        #         name: 'node03',
+        #         des: 'nodedes3',
+        #         symbolSize: 50,
+        #         category: 1,
+        #     }, {
+        #         name: 'node04',
+        #         des: 'nodedes04',
+        #         symbolSize: 50,
+        #         category: 1,
+        #     }, {
+        #         name: 'node05',
+        #         des: 'nodedes05',
+        #         symbolSize: 50,
+        #         category: 1,
+        #     }]
         username = request.POST.get('username')
         password = request.POST.get('password')
         cypher_1 = "MATCH (m:person{name:'"+username+"'}) RETURN m"
         # 通过cypher语句访问neo4j数据库
         # cypher_1 = "MATCH (m:person{name:'bobo'}) return m"
         nodes_data = graph.run(cypher_1 ).data()
-        # return render(request, nodes_data)
-        return HttpResponse(nodes_data)
+        return render(request, 'testasd.html')
+        # return render(request, 'testasd.html',{"data":nodes_data})
+        # return HttpResponse(nodes_data)
 #render返回渲染后的httpresponse对象
 # "name":views_name html变量名->views变量名
 #Django 会自动对 views.py 传到HTML文件中的标签语法进行转义，令其语义失效。加 safe 过滤器是告诉 Django 该数据是安全的，不必对其进行转义，可以让该数据语义生效。
