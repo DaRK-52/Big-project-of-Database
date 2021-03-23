@@ -16,6 +16,13 @@
             name: '类目' + i
         };
     }
+    // var data1=[{name: 'node01',
+    //             des: 'nodedes01',
+    //             symbolSize: 70,
+    //             category: 0,}],
+    // var data1=[{name:{{ data_name|safe }},
+    //             des: {{others_1|safe}}
+    //             }],
     option = {
         // 图的标题
         title: {
@@ -90,8 +97,28 @@
                     textStyle: {}
                 }
             },
-            data:[{name:{{ data|safe }}}],
+            data: [{
+                name: {{relations_from|safe}},
+                des: 'nodedes01',
+                symbolSize: 70,
+                category: 0,
+            },{
+                name: {{relations_to|safe}},
+                des: 'nodedes02',
+                symbolSize: 70,
+                category: 0,
+            }],
+            links: [{
+                source: {{relations_from|safe}},
+                target: {{relations_to|safe}},
+                name: 'link01',
+                des: 'link01des'
+            }],
+            // data:data1,
+            // data:{{data|safe}},
+            // data:[{name:{{ data|safe }}}],
             // 数据
+            // data.name:'node01',
             // data: [{
             //     name: 'node01',
             //     des: 'nodedes01',

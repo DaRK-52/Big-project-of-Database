@@ -4,22 +4,29 @@
     <meta charset="UTF-8">
     <title>登录</title>
 </head>
+<head>
+    <style>
+    body{
+        background-image:url(preview.jpg);
+        /* https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2122074421,1743986761&fm=26&gp=0.jpg */
+        background-repeat:no-repeat;
+        background-size:100%;
+    }
+    </style>
+</head>
 <body>
     <h1>
-        <p style="text-align:center" font size="2">欢迎来到安静的博客：</p>
-
-
+        <p style="text-align:center" font size="2">DaRK52のjojo关系查询器</p>
     </h1>
     <h1>
-        <p style="text-align:center">请输出账号密码：</p>
+        <p style="text-align:center">请输入人物名字：</p>
     </h1>
     <form action="/index/" method="post">
-        {% csrf_token %}
         <p style="text-align:center">
-        用户：<input type="text" name="username" /><br />
+        人物1：<input type="text" name="character_1" /><br />
         </p>
-        <p style="text-align:center">密码：<input type="password" name="password" /><br />
-        <input type="submit" value="提交" />
+        <p style="text-align:center">人物2：<input type="text" name="character_2" /><br />
+        <p style="text-align: center;"><input type="submit" value="提交" /></p>
     </form>
 
 </body>
