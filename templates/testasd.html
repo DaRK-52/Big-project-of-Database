@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ECharts 关系图</title>
+    <title>查询结果</title>
     <script src="js/jquery-3.2.1.js"></script>
     <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
 </head>
@@ -13,7 +13,7 @@
     var categories = [];
     for (var i = 0; i < 2; i++) {
         categories[i] = {
-            name: '类目' + i
+            // name: '类目' + i
         };
     }
     // var data1=[{name: 'node01',
@@ -26,7 +26,7 @@
     option = {
         // 图的标题
         title: {
-            text: 'ECharts 关系图'
+            text: '查询结果'
         },
         // 提示框的配置
         tooltip: {
@@ -68,7 +68,7 @@
             edgeLabel: {
                 normal: {
                     textStyle: {
-                        fontSize: 20
+                        fontSize: 15
                     }
                 }
             },
@@ -98,21 +98,21 @@
                 }
             },
             data: [{
-                name: {{relations_from|safe}},
-                des: 'nodedes01',
+                name: {{name_1|safe}},
+                des: {{nation_1|safe}},
                 symbolSize: 70,
                 category: 0,
             },{
-                name: {{relations_to|safe}},
-                des: 'nodedes02',
+                name: {{name_2|safe}},
+                des: {{nation_2|safe}},
                 symbolSize: 70,
                 category: 0,
             }],
             links: [{
-                source: {{relations_from|safe}},
-                target: {{relations_to|safe}},
-                name: 'link01',
-                des: 'link01des'
+                source: {{name_1|safe}},
+                target: {{name_2|safe}},
+                name: {{relation|safe}},
+                des: {{relation|safe}}
             }],
             // data:data1,
             // data:{{data|safe}},
