@@ -19,6 +19,12 @@ def search_direct_relation(name1,name2):
     return "MATCH ({name: '"+name1+"'})-[r]-({name:'"+name2+"'}) RETURN r,type(r)"
 # 搜索直接存在的关系
 
+def search_relation(name1,name2):
+    return "MATCH (name1: person {name: '"+name1+"'}),(name2: person {name: '"+name2+"'}),p = shortestPath((name1)-[*..15]-(name2)) RETURN p"
+
+def search_node(name):
+    return "MATCH (n{name:'"+name+"'}) RETURN n"
+
 def extract_node(str_node):
     count=0
     for i in range(len(str_node)):
@@ -53,22 +59,51 @@ def extract_nation(str_node):
     return str_node[name1_left+1:name1_right],str_node[name2_left+1:name2_right]
 #提取两个名字的国籍
 
+def extract_relation(str_relation):
+    count=0
+    rela_left=[]
+    rela_right=[]
+    rela=''
+    for i in range(len(str_relation)):
+        if str_relation[i]==':':
+            count+=1
+            rela_left.append(i)
+        elif str_relation[i]=='{':
+            rela_right.append(i)
+    for i in range(0,count):
+        rela+=str_relation[rela_left[i]+1:rela_right[i]]
+    return rela
+
+
 def index(request):
     if  request.method == 'POST':
         character_1 = request.POST.get('character_1')
         character_2 = request.POST.get('character_2')
-        cypher_1="MATCH (name1: person {name: 'Joseph'}),(name2: person {name: 'Jolyne Cujoh'}),p = shortestPath((name1)-[*..15]-(name2)) RETURN p"
+        cypher_name=search_node(str(character_1))
+        character_1_data=graph.run(cypher_name ).data()
+        cypher_name=search_node(str(character_2))
+        character_2_data=graph.run(cypher_name ).data()
         # cypher_1="MATCH ({name: 'Jonathan'})-[r]-({name:'Kujo Jotaro'}) RETURN type(r)"
         # cypher_1=search_direct_relation(character_1,character_2)
         # 查询两个之间的关系
         # 通过cypher语句访问neo4j数据库
+        cypher_1=search_relation(character_1,character_2)
         nodes_data = graph.run(cypher_1 ).data()
-        tmp=str(nodes_data)
+        tmp=str(nodes_data[0]['p'])
+        relation_name=extract_relation(tmp)
         # 转为字符串进行处理
-        return HttpResponse(nodes_data[0]['p'])
-        name1,name2=extract_node(tmp)
-        nationality1,nationality2=extract_nation(tmp)
-        relation_name=str(nodes_data[0]['type(r)'])
+        # return HttpResponse(nodes_data[0]['p'])
+        # return HttpResponse(relation_name)
+        # 节点与关系
+
+        name1=character_1_data[0]['n']['name']
+        name2=character_2_data[0]['n']['name']
+        nationality1=character_1_data[0]['n']['nationality']
+        nationality2=character_2_data[0]['n']['nationality']
+        sex1=character_1_data[0]['n']['sex']
+        sex2=character_2_data[0]['n']['sex']
+        # 获取两个节点的国籍与姓名
+        # relation_name=str(nodes_data[0]['type(r)'])
         return render(request,'testasd.html',{"name_1":json.dumps(name1,ensure_ascii=False),"name_2":json.dumps(name2,ensure_ascii=False),"nation_1":json.dumps(nationality1,ensure_ascii=False),"nation_2":json.dumps(nationality2,ensure_ascii=False),"relation":json.dumps(relation_name,ensure_ascii=False)})
         # return render(request, 'testasd.html',{"relations_from":json.dumps(tmp1,ensure_ascii=False),"relations_to":json.dumps(tmp2,ensure_ascii=False)})
         # return HttpResponse(tmp[from_name_left+1:from_name_right])
