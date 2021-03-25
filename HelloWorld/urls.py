@@ -23,6 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.login),
     path('index/', views.index),
-
     path('/echarts.min.js', views.echarts)
 ]

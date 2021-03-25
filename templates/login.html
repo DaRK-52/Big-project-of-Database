@@ -22,6 +22,7 @@
         <p style="text-align:center">请输入人物名字：</p>
     </h1>
     <form action="/index/" method="post">
+        {% csrf_token %}
         <p style="text-align:center">
         人物1：<input type="text" name="character_1" /><br />
         </p>
