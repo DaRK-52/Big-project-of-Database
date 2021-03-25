@@ -102,6 +102,10 @@ def index(request):
         nationality2=character_2_data[0]['n']['nationality']
         sex1=character_1_data[0]['n']['sex']
         sex2=character_2_data[0]['n']['sex']
+        nationality1+=','
+        nationality2+=','
+        nationality1+=sex1
+        nationality2+=sex2
         # 获取两个节点的国籍与姓名
         # relation_name=str(nodes_data[0]['type(r)'])
         return render(request,'testasd.html',{"name_1":json.dumps(name1,ensure_ascii=False),"name_2":json.dumps(name2,ensure_ascii=False),"nation_1":json.dumps(nationality1,ensure_ascii=False),"nation_2":json.dumps(nationality2,ensure_ascii=False),"relation":json.dumps(relation_name,ensure_ascii=False)})
