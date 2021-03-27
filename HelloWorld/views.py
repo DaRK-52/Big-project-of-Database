@@ -74,6 +74,27 @@ def extract_relation(str_relation):
         rela+=str_relation[rela_left[i]+1:rela_right[i]]
     return rela
 
+def extract_call(str_relation,str_sex):
+    gen=0
+    call={(0,'male'):'cousin',(0,'female'):'cousin',(1,'male'):'nephew',(1,'female'):'niece',(2,'male'):'grandson',(3,'male'):'great-grandson',(4,'male'):'great-great-grandson',(5,'male'):'great-great-great-grandson',
+    (2,'female'):'granddaughter',(3,'female'):'great-granddaughter',(4,'female'):'great-great-granddaughter',(5,'female'):'great-great-great-granddaughter',
+    (8,'female'):'aunt',(9,'female'):'wife',(10,'female'):'daughter in law'}
+    for i in range(len(str_relation)):
+        if  str_relation[i]=='s':
+            gen+=1
+            i+=2
+        elif str_relation[i]=='d':
+            gen+=1
+            i+=7
+        elif str_relation[i]=='b':
+            i+=6
+        elif str_relation[i]=='f':
+            gen-=1
+            i+=5
+        elif str_relation[i]=='w':
+            gen+=10
+            i+=3
+    return call[(gen,str_sex)]
 
 def index(request):
     if  request.method == 'POST':
@@ -91,6 +112,7 @@ def index(request):
         nodes_data = graph.run(cypher_1 ).data()
         tmp=str(nodes_data[0]['p'])
         relation_name=extract_relation(tmp)
+        call=extract_call(relation_name,character_2_data[0]['n']['sex'])
         # 转为字符串进行处理
         # return HttpResponse(nodes_data[0]['p'])
         # return HttpResponse(relation_name)
@@ -106,9 +128,9 @@ def index(request):
         nationality2+=','
         nationality1+=sex1
         nationality2+=sex2
-        # 获取两个节点的国籍与姓名
-        # relation_name=str(nodes_data[0]['type(r)'])
-        return render(request,'testasd.html',{"name_1":json.dumps(name1,ensure_ascii=False),"name_2":json.dumps(name2,ensure_ascii=False),"nation_1":json.dumps(nationality1,ensure_ascii=False),"nation_2":json.dumps(nationality2,ensure_ascii=False),"relation":json.dumps(relation_name,ensure_ascii=False)})
+        #关系计算定义son,daughter,grandson,granddaughter,father,mother,grandfather,grandmother,wife,husband为元关系
+        # return render(request,'testasd.html',{"name_1":json.dumps(name1,ensure_ascii=False),"name_2":json.dumps(name2,ensure_ascii=False),"nation_1":json.dumps(nationality1,ensure_ascii=False),"nation_2":json.dumps(nationality2,ensure_ascii=False),"relation":json.dumps(relation_name,ensure_ascii=False)})
+        return render(request,'testasd.html',{"name_1":json.dumps(name1,ensure_ascii=False),"name_2":json.dumps(name2,ensure_ascii=False),"nation_1":json.dumps(nationality1,ensure_ascii=False),"nation_2":json.dumps(nationality2,ensure_ascii=False),"relation":json.dumps(call,ensure_ascii=False)})
         # return render(request, 'testasd.html',{"relations_from":json.dumps(tmp1,ensure_ascii=False),"relations_to":json.dumps(tmp2,ensure_ascii=False)})
         # return HttpResponse(tmp[from_name_left+1:from_name_right])
 #render返回渲染后的httpresponse对象
