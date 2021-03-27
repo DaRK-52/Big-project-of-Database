@@ -108,6 +108,10 @@ def index(request):
         # cypher_1=search_direct_relation(character_1,character_2)
         # 查询两个之间的关系
         # 通过cypher语句访问neo4j数据库
+        if  character_1_data[0]['n']['gen']>character_2_data[0]['n']['gen']:
+            temp=character_1_data
+            character_1_data=character_2_data
+            character_2_data=temp
         cypher_1=search_relation(character_1,character_2)
         nodes_data = graph.run(cypher_1 ).data()
         tmp=str(nodes_data[0]['p'])
