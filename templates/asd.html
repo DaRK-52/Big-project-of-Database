@@ -1,57 +1,23 @@
-<form action="form_action.php" method="get">
-    <p>First name: <input type="text" name="fname" /></p>
-    <p>Last name: <input type="text" name="lname" /></p>
-    <input type="submit" value="Submit" />
-    </form>
-    <form action="form_action.php" method="get">
-    <p>First name: <input id="bt1" type="text" name="fname" /></p>
-    <p>Last name: <input id="bt2" type="text" name="lname" /></p>
-    <input type="submit" value="Submit" />
-    </form>
-    <script>
-    console.log($('#bt1').val())
-    console.log($('#bt2').val());
-    </script>
-    
-    
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8">
-        <title>ECharts</title>
-        <!-- 引入 echarts.js -->
-        <script src="echarts.min.js"></script>
-    </head>
-    <body>
-        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-        <div id="main" style="width: 600px;height:400px;"></div>
-        <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('main'));
-    
-            // 指定图表的配置项和数据
-            var option = {
-                title: {
-                    text: '本月科室病人数量分析'
-                },
-                tooltip: {},
-                legend: {
-                    data:['人数']
-                },
-                xAxis: {
-                    data: ["儿科","妇产科","外科","脑科","耳鼻喉科","呼吸道科"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '人数',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
-    
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-    </body>
-    </html>
-    
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.intro
+{
+background-color:yellow;
+}
+</style>
+</head>
+
+<body>
+<h1>欢迎来到我到的主页</h1>
+
+<div class="intro">
+<p>我是唐老鸭。</p>
+<p>我住在 Duckburg。</p>
+</div>
+
+<p>我最好的朋友是米老鼠。</p>
+
+</body>
+</html>

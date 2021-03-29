@@ -16,7 +16,7 @@ def echarts(request):
 
 
 def search_direct_relation(name1,name2):
-    return "MATCH ({name: '"+name1+"'})-[r]-({name:'"+name2+"'}) RETURN r,type(r)"
+    return "MATCH ({name: '"+name1+"'})-[p]-({name:'"+name2+"'}) RETURN p"
 # 搜索直接存在的关系
 
 def search_relation(name1,name2):
@@ -96,8 +96,41 @@ def extract_call(str_relation,str_sex):
             i+=3
     return call[(gen,str_sex)]
 
+def home(request):
+    return render(request,'homepage.html')
+
+def add_new(request):
+    return render(request,'add_new.html')
+
+def new_mem(request):
+    if request.method == 'POST':
+        character_1=request.POST.get('character_1')
+        nation_1=request.POST.get('nation1')
+        sex_1=request.POST.get('sex_1')
+        character_2=request.POST.get('character_2')
+        relation_1=request.POST.get('relation_1')
+        node = Node('person', name = str(character_1))
+        node['nationality']=str(nation_1)
+        node['sex']=str(sex_1)
+
+        cypher_c2=search_node(str(character_2))
+        node2=graph.run(cypher_c2).data()
+        #       get the node of character2
+        
+        node['gen']=node2[0]['n']['gen']+1
+        graph.create(node)
+        if(node['sex']=='male'):
+            graph.create(Relationship(node2[0]['n'],'son',node))
+            return render(request,'answer.html',{"name_1":json.dumps(str(character_2),ensure_ascii=False),"name_2":json.dumps(str(character_1),ensure_ascii=False),"nation_1":json.dumps(str(node2[0]['n']['nationality']),ensure_ascii=False),"nation_2":json.dumps(str(nation_1),ensure_ascii=False),"relation":json.dumps('son',ensure_ascii=False)})
+        else:
+            graph.create(Relationship(node2[0]['n'],'daughter',node))
+            return render(request,'answer.html',{"name_1":json.dumps(str(character_2),ensure_ascii=False),"name_2":json.dumps(str(character_1),ensure_ascii=False),"nation_1":json.dumps(str(node2[0]['n']['nationality']),ensure_ascii=False),"nation_2":json.dumps(str(nation_1),ensure_ascii=False),"relation":json.dumps('daughter',ensure_ascii=False)})
+        # return HttpResponse(node)
+        
+
 def index(request):
     if  request.method == 'POST':
+        flag=0
         character_1 = request.POST.get('character_1')
         character_2 = request.POST.get('character_2')
         cypher_name=search_node(str(character_1))
@@ -112,11 +145,21 @@ def index(request):
             temp=character_1_data
             character_1_data=character_2_data
             character_2_data=temp
-        cypher_1=search_relation(character_1,character_2)
+
+        cypher_1=search_direct_relation(character_1,character_2)
         nodes_data = graph.run(cypher_1 ).data()
+        # return HttpResponse(len(str(nodes_data)))
+        if len(str(nodes_data))==0:
+            cypher_1=search_relation(character_1,character_2)
+            nodes_data = graph.run(cypher_1 ).data()
+        else:
+            flag=1
         tmp=str(nodes_data[0]['p'])
         relation_name=extract_relation(tmp)
-        call=extract_call(relation_name,character_2_data[0]['n']['sex'])
+        if(flag==0):
+            call=extract_call(relation_name,character_2_data[0]['n']['sex'])
+        else:
+            call=relation_name
         # 转为字符串进行处理
         # return HttpResponse(nodes_data[0]['p'])
         # return HttpResponse(relation_name)
@@ -134,7 +177,7 @@ def index(request):
         nationality2+=sex2
         #关系计算定义son,daughter,grandson,granddaughter,father,mother,grandfather,grandmother,wife,husband为元关系
         # return render(request,'testasd.html',{"name_1":json.dumps(name1,ensure_ascii=False),"name_2":json.dumps(name2,ensure_ascii=False),"nation_1":json.dumps(nationality1,ensure_ascii=False),"nation_2":json.dumps(nationality2,ensure_ascii=False),"relation":json.dumps(relation_name,ensure_ascii=False)})
-        return render(request,'testasd.html',{"name_1":json.dumps(name1,ensure_ascii=False),"name_2":json.dumps(name2,ensure_ascii=False),"nation_1":json.dumps(nationality1,ensure_ascii=False),"nation_2":json.dumps(nationality2,ensure_ascii=False),"relation":json.dumps(call,ensure_ascii=False)})
+        return render(request,'answer.html',{"name_1":json.dumps(name1,ensure_ascii=False),"name_2":json.dumps(name2,ensure_ascii=False),"nation_1":json.dumps(nationality1,ensure_ascii=False),"nation_2":json.dumps(nationality2,ensure_ascii=False),"relation":json.dumps(call,ensure_ascii=False)})
         # return render(request, 'testasd.html',{"relations_from":json.dumps(tmp1,ensure_ascii=False),"relations_to":json.dumps(tmp2,ensure_ascii=False)})
         # return HttpResponse(tmp[from_name_left+1:from_name_right])
 #render返回渲染后的httpresponse对象

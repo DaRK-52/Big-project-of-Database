@@ -21,7 +21,10 @@ from django.contrib import admin
 urlpatterns = [
     
     path('admin/', admin.site.urls),
+    path('homepage/',views.home),
     path('login/', views.login),
     path('index/', views.index),
+    path('add_new/',views.add_new),
+    path('new_mem/',views.new_mem),
     path('/echarts.min.js', views.echarts)
 ]
