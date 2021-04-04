@@ -102,6 +102,16 @@ def home(request):
 def add_new(request):
     return render(request,'add_new.html')
 
+def delete(request):
+    return render(request,'delete.html')
+
+def del_men(request):
+    if(request.method=='POST'):
+        character_1=request.POST.get('character_1')
+    cypher="MATCH (n:person{name:'"+str(character_1)+"'}) DETACH DELETE n;"
+    graph.run(cypher).data()
+    return HttpResponse("Delete successfully!")
+
 def new_mem(request):
     if request.method == 'POST':
         character_1=request.POST.get('character_1')

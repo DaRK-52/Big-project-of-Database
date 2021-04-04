@@ -24,7 +24,12 @@ urlpatterns = [
     path('homepage/',views.home),
     path('login/', views.login),
     path('index/', views.index),
+
     path('add_new/',views.add_new),
     path('new_mem/',views.new_mem),
+    # add new node
+
+    path('delete/',views.delete),
+    path('del_men/',views.del_men),
     path('/echarts.min.js', views.echarts)
 ]
