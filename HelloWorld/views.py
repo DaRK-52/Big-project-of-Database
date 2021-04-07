@@ -147,6 +147,8 @@ def index(request):
         character_1_data=graph.run(cypher_name ).data()
         cypher_name=search_node(str(character_2))
         character_2_data=graph.run(cypher_name ).data()
+        if(len(str(character_1_data))==0 or len(str(character_2_data))):
+            return HttpResponse("person not exists")
         # cypher_1="MATCH ({name: 'Jonathan'})-[r]-({name:'Kujo Jotaro'}) RETURN type(r)"
         # cypher_1=search_direct_relation(character_1,character_2)
         # 查询两个之间的关系
@@ -159,11 +161,13 @@ def index(request):
         cypher_1=search_direct_relation(character_1,character_2)
         nodes_data = graph.run(cypher_1 ).data()
         # return HttpResponse(len(str(nodes_data)))
-        if len(str(nodes_data))==0:
+        if len(str(nodes_data))==2:
             cypher_1=search_relation(character_1,character_2)
             nodes_data = graph.run(cypher_1 ).data()
+            
         else:
             flag=1
+        
         tmp=str(nodes_data[0]['p'])
         relation_name=extract_relation(tmp)
         if(flag==0):

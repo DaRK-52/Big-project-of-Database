@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JOJOの家谱</title>
+</head>
+<head>
+    <style>
+    body{
+        background-image:url("https://pic4.zhimg.com/80/v2-6ddd99a11d8e98484e6ce1cf4b5da8bc_1440w.jpg?source=1940ef5c");
+        /* https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2122074421,1743986761&fm=26&gp=0.jpg */
+        background-repeat:no-repeat;
+        background-size:100%;
+    }
+    </style>
+</head>
+<body>
+    <h1 style="color: white;">
+        <p style="text-align:center" font size="2">JOJOの家谱</p>
+    </h1>
+    <form action="/login/" method="post">
+        {% csrf_token %}
+        <p style="text-align: center;"><input type="submit" value="家族成员关系查询" style="font-size: larger;color: white;width:200px;height:50px;background-color: rgba(0, 0, 0, 0);" onmouseover="this.style.borderColor='black'" onmouseout="this.style.borderColor='white'"/></p>
+    </form>
+    <form action="/delete/" method="post">
+        {% csrf_token %}
+        <p style="text-align: center;"><input type="submit" value="开除家族成员" style="font-size: larger;color: white;width:200px;height:50px;background-color: rgba(0, 0, 0, 0);" onmouseover="this.style.borderColor='black'" onmouseout="this.style.borderColor='white'"/></p>
+    </form>
+    <form action="/add_new/" method="post">
+        {% csrf_token %}
+        <p style="text-align: center;"><input type="submit" value="新增家族成员" style="font-size: larger;color: white;width:200px;height:50px;background-color: rgba(0, 0, 0, 0);" onmouseover="this.style.borderColor='black'" onmouseout="this.style.borderColor='white'"/></p>
+    </form>
+
+</body>
+</html>

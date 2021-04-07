@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JOJOの家谱</title>
+</head>
+    
+
+<head>
+    <style>
+    body{
+        background-image:url("https://pic4.zhimg.com/80/v2-6ddd99a11d8e98484e6ce1cf4b5da8bc_1440w.jpg?source=1940ef5c");
+        /* https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2122074421,1743986761&fm=26&gp=0.jpg */
+        background-repeat:no-repeat;
+        background-size:100%;
+    }
+    </style>
+</head>
+
+
+
+<body style="align-self:baseline;">
+    <h1 style="color: white;">
+        <p style="text-align:center" font size="2">JOJOの家谱新增成员</p>
+    </h1>
+    <!-- <h4 style="color:white">
+        <p style="">tips：人物1为新加入家谱的人物，人物2为家谱中已存在的人物，关系为人物1是人物2的xxx</p>
+    </h4> -->
+    <h1 style="color:white">
+        <p style="text-align:center">请输入：</p>
+    </h1>
+    <form action="/new_mem/" method="post">
+        {% csrf_token %}
+        <p style="color:white;vertical-align: auto;text-align: center;">
+        人物1：<input type="text" name="character_1" /><br />
+        </p>
+        <p style="color:white;vertical-align: auto;text-align: center;">国籍：<input type="text" name="nation1" /><br />
+            <!-- <form style="color:white">
+                <label>性别：</label><select name="性别：" style="text-align:center;width:150px;height: 30px">
+                <option value="male">male</option>
+                <option value="female">female</option>
+                </select>
+            </form> -->
+        <p style="text-align:center;color:white;vertical-align: auto;text-align: center;">性别：<input type="text" name="sex_1" /><br />
+        <p style="text-align:inherit;color:white;vertical-align: auto;text-align: center;">人物2：<input type="text" name="character_2" /><br />
+        <p style="color:white;vertical-align: auto;text-align: center;">关系：<input type="text" name="relation_1" /><br />
+        <p style="text-align: center;"><input type="submit" value="提交" /></p>
+    </form>
+</body>
+
+</html>

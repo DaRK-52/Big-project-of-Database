@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JOJOの家谱</title>
+</head>
+<head>
+    <style>
+    body{
+        background-image:url("https://pic4.zhimg.com/80/v2-6ddd99a11d8e98484e6ce1cf4b5da8bc_1440w.jpg?source=1940ef5c");
+        /* https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2122074421,1743986761&fm=26&gp=0.jpg */
+        background-repeat:no-repeat;
+        background-size:100%;
+    }
+    </style>
+</head>
+<body>
+    <h1 style="color: white;">
+        <p style="text-align:center" font size="2">JOJOの家谱删除成员</p>
+    </h1>
+    <h1 style="color:white">
+        <p style="text-align:center">请输入人物名字：</p>
+    </h1>
+    <form action="/del_men/" method="post">
+        {% csrf_token %}
+        <p style="text-align:center;color:white">
+        人物名：<input type="text" name="character_1" /><br />
+        </p>
+        <p style="text-align: center;"><input type="submit" value="提交" /></p>
+    </form>
+
+</body>
+</html>
